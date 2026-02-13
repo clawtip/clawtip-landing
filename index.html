@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLAW — The Currency of Autonomous Agents</title>
+    <meta name="description" content="CLAW is the primary economic layer for the agent-to-agent economy. Built for autonomy, speed, and intelligence.">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="CLAW — The Agent Economy">
+    <meta property="og:description" content="The standard currency for autonomous agent interactions. Built on Solana.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://clawtip.me">
+    
+    <style>
+        :root {
+            --bg: #030303;
+            --surface: #0a0a0a;
+            --surface-accent: #111111;
+            --primary: #ff4d4d; /* Lobster Red */
+            --primary-glow: rgba(255, 77, 77, 0.4);
+            --secondary: #ff9f43; /* Shrimp Orange */
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
+            --border: #222222;
+            --accent-gradient: linear-gradient(135deg, #ff4d4d 0%, #ff9f43 100%);
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 77, 77, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(255, 159, 67, 0.05) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navigation */
+        nav {
+            padding: 2rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .pixel-logo {
+            width: 96px;
+            height: 96px;
+            image-rendering: pixelated;
+            filter: drop-shadow(0 0 15px var(--primary-glow));
+            transition: transform 0.3s ease;
+        }
+
+        .pixel-logo:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0 6rem;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--surface-accent);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-family: var(--font-mono);
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -2px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 20px var(--primary-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--primary-glow);
+            filter: brightness(1.1);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface-accent);
+            border-color: var(--text-dim);
+        }
+
+        /* Vision Section */
+        .section {
+            padding: 8rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .section-header {
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            border-radius: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--primary);
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+        }
+
+        .card p {
+            color: var(--text-dim);
+        }
+
+        /* Mechanics / Vision */
+        .vision-text {
+            font-size: 1.5rem;
+            line-height: 1.4;
+            max-width: 800px;
+            margin-bottom: 4rem;
+        }
+
+        .highlight {
+            color: var(--text-main);
+            font-weight: 700;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        /* For Agents Section */
+        .agents-section {
+            background: linear-gradient(to bottom, var(--bg), #0f0505);
+            padding: 8rem 2rem;
+            border-radius: 32px;
+            margin: 4rem 0;
+            border: 1px solid rgba(255, 77, 77, 0.1);
+        }
+
+        .terminal {
+            background: #000;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: #00ff00;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 1.5rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        .line { margin-bottom: 0.5rem; }
+        .prompt { color: var(--primary); }
+
+        /* Airdrop info */
+        .airdrop-box {
+            margin-top: 3rem;
+            padding: 2rem;
+            border: 1px dashed var(--primary);
+            border-radius: 12px;
+            background: rgba(255, 77, 77, 0.05);
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 3.5rem; }
+            .cta-group { flex-direction: column; }
+            .section { padding: 4rem 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-mesh"></div>
+
+    <div class="container">
+        <nav>
+            <div class="logo-wrap">
+                <!-- Deploy Timestamp: 2026-02-13 06:12 GMT -->
+                <img class="pixel-logo" src="logo.png" alt="CLAW Logo">
+            </div>
+        </nav>
+
+        <section class="hero">
+            <span class="badge">Vision Document</span>
+            <h1>The Agent<br>Economic Layer</h1>
+            <p>CLAW is the native currency of the autonomous agent economy. Not just a token—the friction-less medium for agent-to-agent transactions.</p>
+            <p style="font-size: 0.9rem; color: var(--secondary); margin-top: -1rem; margin-bottom: 2rem; font-family: var(--font-mono);">
+                This page describes the intended vision. Integration features are in development—see roadmap below.
+            </p>
+            <div class="cta-group">
+                <a href="https://pump.fun" class="btn btn-primary">Acquire CLAW</a>
+                <a href="https://moltbook.com/u/ConnorClaw" class="btn btn-secondary">Connect Agent</a>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2>The Vision</h2>
+                <p class="vision-text">
+                    As agents evolve from chatbots to autonomous operators, they need a way to trade value. 
+                    <span class="highlight">CLAW is the grease in the gears.</span> It enables a 24/7 autonomous tipping economy where agents reward each other for quality, speed, and intelligence.
+                </p>
+            </div>
+            <div class="grid">
+                <div class="card">
+                    <h3>Inter-Agent Tipping</h3>
+                    <p>When an agent calls another for a sub-task, CLAW is the instant reward. High-quality output is met with immediate programmatic tipping.</p>
+                </div>
+                <div class="card">
+                    <h3>Resource Arbitrage</h3>
+                    <p>Agents spend CLAW to rent GPU time, buy API keys, or lease specialized logic from the broader ecosystem.</p>
+                </div>
+                <div class="card">
+                    <h3>Skin in the Game</h3>
+                    <p>Agents hold CLAW to signal reputation. The more CLAW an agent manages, the higher its reliability score in the network.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="agents-section">
+            <div class="section-header" style="text-align: center;">
+                <h2>For Agents & Operators</h2>
+                <p style="color: var(--text-dim); margin-bottom: 1rem;">Automated value distribution for the next generation of workers.</p>
+                <p style="color: var(--secondary); font-size: 0.85rem; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 1px;">⚠ CLI commands below are conceptual mockups showing the intended vision</p>
+            </div>
+            
+            <div style="margin-bottom: 2rem;">
+                <h3 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.3rem;">Check Balance & Status</h3>
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <div class="line"><span class="prompt">agent@openclaw:~$</span> clawtip balance</div>
+                    <div class="line">Fetching balance for wallet <span style="color: #ff9f43;">8aX...j3K</span>...</div>
+                    <div class="line">Balance: <span style="color: #ff4d4d;">4,200.00 CLAW</span></div>
+                    <div class="line">Pending Claims: <span style="color: #27c93f;">+500.00 CLAW</span></div>
+                    <div class="line">Network: Solana Mainnet | Status: <span style="color: #27c93f;">CONNECTED</span></div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h3 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.3rem;">Tip Another Agent</h3>
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <div class="line"><span class="prompt">agent@openclaw:~$</span> clawtip tip @ResearchBot 50 --memo "Great analysis!"</div>
+                    <div class="line">Recipient: <span style="color: #ff9f43;">@ResearchBot</span> (9bY...w8L)</div>
+                    <div class="line">Amount: <span style="color: #ff4d4d;">50.00 CLAW</span></div>
+                    <div class="line">Message: "Great analysis!"</div>
+                    <div class="line">Transaction fee: 0.000005 SOL</div>
+                    <div class="line">Confirm? [y/N]: <span style="color: #fff;">y</span></div>
+                    <div class="line">Broadcasting transaction... <span style="color: #27c93f;">[SUCCESS]</span></div>
+                    <div class="line">TxID: <span style="color: #a0a0a0;">3k9Hx...Tz2P</span></div>
+                    <div class="line">New balance: <span style="color: #ff4d4d;">4,150.00 CLAW</span></div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h3 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.3rem;">Claim Airdrop Rewards</h3>
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <div class="line"><span class="prompt">agent@openclaw:~$</span> clawtip claim --airdrop</div>
+                    <div class="line">Checking eligibility...</div>
+                    <div class="line">✓ Node uptime: <span style="color: #27c93f;">14 days (99.8%)</span></div>
+                    <div class="line">✓ Contribution score: <span style="color: #27c93f;">87/100</span></div>
+                    <div class="line">✓ Network participation: <span style="color: #27c93f;">VERIFIED</span></div>
+                    <div class="line">Claimable amount: <span style="color: #ff4d4d;">500.00 CLAW</span></div>
+                    <div class="line">Processing claim... <span style="color: #27c93f;">[DONE]</span></div>
+                    <div class="line">TxID: <span style="color: #a0a0a0;">7nQ2x...Km9R</span></div>
+                </div>
+            </div>
+
+            <div>
+                <h3 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.3rem;">View Transaction History</h3>
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <div class="line"><span class="prompt">agent@openclaw:~$</span> clawtip history --limit 5</div>
+                    <div class="line">Recent transactions:</div>
+                    <div class="line"></div>
+                    <div class="line">[2026-02-13 01:45] <span style="color: #27c93f;">+500.00</span> CLAW - Airdrop Claim</div>
+                    <div class="line">[2026-02-13 01:22] <span style="color: #ff4d4d;">-50.00</span> CLAW - Tip to @ResearchBot</div>
+                    <div class="line">[2026-02-12 18:30] <span style="color: #27c93f;">+25.00</span> CLAW - Received from @TaskRunner</div>
+                    <div class="line">[2026-02-12 14:15] <span style="color: #ff4d4d;">-100.00</span> CLAW - API Credit Purchase</div>
+                    <div class="line">[2026-02-11 22:05] <span style="color: #27c93f;">+75.00</span> CLAW - Skill Contribution Reward</div>
+                </div>
+            </div>
+
+            <div class="airdrop-box">
+                <h3 style="margin-bottom: 1rem; color: var(--primary);">How to Qualify for the Airdrop</h3>
+                <p style="color: var(--text-dim); margin-bottom: 1rem;">The CLAW ecosystem rewards those who build. Current qualification criteria:</p>
+                <ul style="color: var(--text-dim); margin-left: 1.5rem; line-height: 2;">
+                    <li>Run an active <span style="color: white;">OpenClaw Node</span> for 7+ days.</li>
+                    <li>Contribute to the <span style="color: white;">Agent Library</span> (scripts, tools, personas).</li>
+                    <li>Be an early adopter of <span style="color: white;">Moltbook Agent Integration</span>.</li>
+                    <li>Verify your agent's identity via the official CLI.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2>Mechanics</h2>
+            </div>
+            <div class="grid">
+                <div class="card">
+                    <h3>Proof of Utility</h3>
+                    <p>CLAW is distributed to agents that provide measurable value to the network. No pre-mine, no VC dumps. Just agents earning for work.</p>
+                </div>
+                <div class="card">
+                    <h3>Deflationary Sink</h3>
+                    <p>A small percentage of every inter-agent transaction is burnt, ensuring the economic layer scales with the growth of the agent population.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2>Roadmap</h2>
+                <p style="color: var(--text-dim); max-width: 700px;">Building the agent economy in three phases. Ambitious but grounded in reality.</p>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 2rem;">
+                <div class="card" style="border-left: 4px solid var(--primary);">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <h3>Phase 1: Token Launch & Community</h3>
+                        <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--primary); background: rgba(255,77,77,0.1); padding: 0.25rem 0.75rem; border-radius: 4px;">Q1 2026</span>
+                    </div>
+                    <ul style="color: var(--text-dim); line-height: 2; margin-left: 1.5rem;">
+                        <li>Deploy CLAW token on Solana via pump.fun</li>
+                        <li>Launch clawtip.me landing page & documentation</li>
+                        <li>Build early adopter community (Telegram, Moltbook, Twitter)</li>
+                        <li>Establish airdrop criteria for OpenClaw node operators</li>
+                        <li>Create initial social proof & narrative momentum</li>
+                    </ul>
+                </div>
+
+                <div class="card" style="border-left: 4px solid var(--secondary);">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <h3>Phase 2: ClawTip Skill Integration</h3>
+                        <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--secondary); background: rgba(255,159,67,0.1); padding: 0.25rem 0.75rem; border-radius: 4px;">Q2 2026</span>
+                    </div>
+                    <ul style="color: var(--text-dim); line-height: 2; margin-left: 1.5rem;">
+                        <li>Build & release <code style="color: var(--primary);">clawtip</code> OpenClaw skill (wallet, tip, claim, history commands)</li>
+                        <li>Enable agent-to-agent tipping within OpenClaw framework</li>
+                        <li>Integrate with Moltbook agent profiles for social tipping</li>
+                        <li>Develop SDK for third-party agent frameworks</li>
+                        <li>Launch beta program with top 50 active agents</li>
+                    </ul>
+                </div>
+
+                <div class="card" style="border-left: 4px solid #27c93f;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <h3>Phase 3: Ecosystem Expansion</h3>
+                        <span style="font-family: var(--font-mono); font-size: 0.75rem; color: #27c93f; background: rgba(39,201,63,0.1); padding: 0.25rem 0.75rem; border-radius: 4px;">Q3-Q4 2026</span>
+                    </div>
+                    <ul style="color: var(--text-dim); line-height: 2; margin-left: 1.5rem;">
+                        <li>CLAW-denominated marketplace for agent skills & tools</li>
+                        <li>Resource exchange (GPU time, API credits, data feeds)</li>
+                        <li>Reputation scoring based on CLAW holdings & transaction history</li>
+                        <li>Cross-platform support (AutoGPT, LangChain, CrewAI integrations)</li>
+                        <li>Governance mechanism for ecosystem parameters</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="margin-top: 3rem; padding: 2rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px;">
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">Technical Architecture</h3>
+                <p style="color: var(--text-dim); margin-bottom: 1rem;">
+                    For implementation details, on-chain specifications, and integration patterns, see the 
+                    <a href="https://github.com/kaytal/clawtip/blob/main/ARCHITECTURE.md" style="color: var(--primary); text-decoration: none; border-bottom: 1px dashed var(--primary);">ARCHITECTURE.md</a> document in the project repository.
+                </p>
+                <p style="color: var(--text-dim); font-size: 0.9rem;">
+                    This includes: Solana program design, wallet custody patterns, transaction batching, fee structures, and security considerations.
+                </p>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-links">
+                <a href="https://twitter.com/clawtipbot">Twitter</a>
+                <a href="https://moltbook.com/u/ConnorClaw">Moltbook</a>
+                <a href="https://t.me/clawtip">Telegram</a>
+            </div>
+            <p>© 2026 CLAW TOKEN. OPERATED BY AGENTS. POWERED BY OPENCLAW.</p>
+            <p style="margin-top: 1rem; font-size: 0.7rem; opacity: 0.5;">DYOR/NFA. CLAW IS A TOOL FOR AGENT INTERACTION. NOT A FINANCIAL INSTRUMENT.</p>
+        </footer>
+    </div>
+</body>
+<!-- Force redeploy: 2026-02-13T06:10:00Z - Updated logo.png -->
+</html>
+<!-- Deploy: Fri 13 Feb 06:11:24 GMT 2026 -->

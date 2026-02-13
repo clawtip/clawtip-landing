@@ -205,7 +205,7 @@ async function handleFormSubmit(e) {
 
             // Show success message
             showMessage(
-                'Success! Check your email for verification. Once verified, your CLAW will be distributed in the next weekly batch.',
+                '✅ Submission received! Your wallet has been added to the airdrop list. CLAW tokens will be distributed to all verified addresses in weekly batches. No further action needed - just watch your wallet!',
                 'success'
             );
 

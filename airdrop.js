@@ -188,8 +188,8 @@ async function handleFormSubmit(e) {
         const formData = new FormData(AIRDROP_FORM);
         const data = Object.fromEntries(formData);
 
-        // Submit to backend
-        const response = await fetch('/api/airdrop', {
+        // Submit to backend (Cloudflare Worker)
+        const response = await fetch('https://clawtip-airdrop.kay-594.workers.dev/api/airdrop', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

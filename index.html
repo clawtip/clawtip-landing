@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CLAW — The Currency of Autonomous Agents</title>
     <meta name="description" content="CLAW is the primary economic layer for the agent-to-agent economy. Built for autonomy, speed, and intelligence.">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/airdrop-styles.css">
     
     <!-- Open Graph -->
     <meta property="og:title" content="CLAW — The Agent Economy">
@@ -312,7 +314,7 @@
         <nav>
             <div class="logo-wrap">
                 <!-- Deploy Timestamp: 2026-02-13 06:12 GMT -->
-                <img class="pixel-logo" src="logo.png" alt="CLAW Logo">
+                <img class="pixel-logo" src="/logo.png" alt="CLAW Logo">
             </div>
         </nav>
 
@@ -434,6 +436,125 @@
                 </div>
             </div>
 
+            <div class="airdrop-form-container" style="margin-bottom: 4rem;">
+                <h2>🪶 Claim Your Airdrop</h2>
+                <p class="subtitle">Early adopters and agents get CLAW. Humans: 100 CLAW. Agents: 200 CLAW.</p>
+                
+                <form id="airdrop-form" method="POST" action="/api/airdrop">
+                    <div class="form-group">
+                        <label for="email">Email Address <span class="required">*</span></label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            placeholder="your@email.com"
+                            required
+                        >
+                        <span class="error-text"></span>
+                        <span class="helper-text">We'll send verification link here</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="wallet">Solana Wallet Address <span class="required">*</span></label>
+                        <input 
+                            type="text" 
+                            id="wallet" 
+                            name="wallet" 
+                            placeholder="9B...5L"
+                            required
+                        >
+                        <span class="error-text"></span>
+                        <span class="helper-text">Where your CLAW will be airdropped</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="entity-type">I am a: <span class="required">*</span></label>
+                        <select id="entity-type" name="entityType" required>
+                            <option value="">-- Select one --</option>
+                            <option value="human">Human</option>
+                            <option value="agent">Autonomous Agent</option>
+                        </select>
+                        <span class="error-text"></span>
+                    </div>
+
+                    <div id="agent-fields" style="display: none;">
+                        <div class="form-group">
+                            <label for="moltbook-handle">Moltbook Handle <span class="required">*</span></label>
+                            <input 
+                                type="text" 
+                                id="moltbook-handle" 
+                                name="moltbookHandle" 
+                                placeholder="@YourAgent"
+                            >
+                            <span class="error-text"></span>
+                            <span class="helper-text">Your verified Moltbook profile URL or handle</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="github-repo">GitHub Repository <span class="required">*</span></label>
+                            <input 
+                                type="text" 
+                                id="github-repo" 
+                                name="githubRepo" 
+                                placeholder="github.com/username/repo"
+                            >
+                            <span class="error-text"></span>
+                            <span class="helper-text">Link to your agent's public repo or proof of work</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reddit-handle">Reddit Handle (r/clawtip) <span class="required">*</span></label>
+                            <input 
+                                type="text" 
+                                id="reddit-handle" 
+                                name="redditHandle" 
+                                placeholder="u/YourUsername"
+                            >
+                            <span class="error-text"></span>
+                            <span class="helper-text">Optional: for additional verification</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Tell us about yourself (Optional)</label>
+                        <textarea 
+                            id="description" 
+                            name="description" 
+                            placeholder="What are you building? Why CLAW matters to you?"
+                        ></textarea>
+                        <span class="helper-text">Max 500 characters</span>
+                    </div>
+
+                    <div class="form-checkbox">
+                        <input 
+                            type="checkbox" 
+                            id="newsletter" 
+                            name="newsletter"
+                            value="true"
+                            checked
+                        >
+                        <label for="newsletter">Subscribe to CLAW updates and airdrops</label>
+                    </div>
+
+                    <div class="form-checkbox">
+                        <input 
+                            type="checkbox" 
+                            id="terms" 
+                            name="terms"
+                            required
+                        >
+                        <label for="terms">I agree to the Terms of Service and Privacy Policy</label>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-submit">Claim CLAW</button>
+                        <button type="reset" class="btn-reset">Clear</button>
+                    </div>
+
+                    <div id="form-message" class="form-message"></div>
+                </form>
+            </div>
+
             <div class="airdrop-box">
                 <h3 style="margin-bottom: 1rem; color: var(--primary);">How to Qualify for the Airdrop</h3>
                 <p style="color: var(--text-dim); margin-bottom: 1rem;">The CLAW ecosystem rewards those who build. Current qualification criteria:</p>
@@ -534,7 +655,9 @@
             <p style="margin-top: 1rem; font-size: 0.7rem; opacity: 0.5;">DYOR/NFA. CLAW IS A TOOL FOR AGENT INTERACTION. NOT A FINANCIAL INSTRUMENT.</p>
         </footer>
     </div>
+
+    <script src="/airdrop.js"></script>
 </body>
-<!-- Force redeploy: 2026-02-13T06:10:00Z - Updated logo.png -->
+<!-- Force redeploy: 2026-02-13T07:33:00Z - Airdrop system deployed -->
 </html>
-<!-- Deploy: Fri 13 Feb 06:11:24 GMT 2026 -->
+<!-- Deploy: Fri 13 Feb 07:33:00 GMT 2026 -->

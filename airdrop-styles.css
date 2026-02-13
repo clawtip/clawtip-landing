@@ -1,0 +1,238 @@
+/* Airdrop Form Styles */
+
+.airdrop-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    background: linear-gradient(135deg, rgba(255,77,77,0.08) 0%, rgba(255,159,67,0.04) 100%);
+    border: 1px solid rgba(255, 77, 77, 0.3);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+}
+
+.airdrop-form-container h2 {
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+}
+
+.airdrop-form-container .subtitle {
+    color: var(--text-dim);
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.form-group label .required {
+    color: var(--primary);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    border-radius: 8px;
+    font-family: var(--font-main);
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(255, 77, 77, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.form-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.form-checkbox input[type="checkbox"] {
+    width: auto;
+    cursor: pointer;
+    accent-color: var(--primary);
+}
+
+.form-checkbox label {
+    margin-bottom: 0;
+    cursor: pointer;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.form-checkbox label a {
+    color: var(--primary);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--primary);
+}
+
+.form-checkbox label a:hover {
+    color: var(--secondary);
+    border-bottom-color: var(--secondary);
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-submit {
+    flex: 1;
+    padding: 1rem 2rem;
+    background: var(--accent-gradient);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 20px var(--primary-glow);
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px var(--primary-glow);
+    filter: brightness(1.1);
+}
+
+.btn-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-reset {
+    padding: 1rem 2rem;
+    background: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    font-family: var(--font-main);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-reset:hover {
+    background: var(--surface-accent);
+    border-color: var(--text-dim);
+}
+
+/* Status Messages */
+.form-message {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    display: none;
+}
+
+.form-message.show {
+    display: block;
+}
+
+.form-message.success {
+    background: rgba(39, 201, 63, 0.1);
+    border: 1px solid rgba(39, 201, 63, 0.3);
+    color: #27c93f;
+}
+
+.form-message.error {
+    background: rgba(255, 77, 77, 0.1);
+    border: 1px solid rgba(255, 77, 77, 0.3);
+    color: var(--primary);
+}
+
+.form-message.info {
+    background: rgba(255, 159, 67, 0.1);
+    border: 1px solid rgba(255, 159, 67, 0.3);
+    color: var(--secondary);
+}
+
+/* Loading spinner */
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 77, 77, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--primary);
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Field error states */
+.form-group.error input,
+.form-group.error select,
+.form-group.error textarea {
+    border-color: var(--primary);
+    background: rgba(255, 77, 77, 0.05);
+}
+
+.form-group .error-text {
+    color: var(--primary);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    display: none;
+}
+
+.form-group.error .error-text {
+    display: block;
+}
+
+/* Helper text */
+.helper-text {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .airdrop-form-container {
+        padding: 2rem 1.5rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn-submit,
+    .btn-reset {
+        width: 100%;
+    }
+}

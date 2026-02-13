@@ -9,7 +9,6 @@ redirects = []
 [build]
 publish = "/home/connor/.openclaw/workspace/clawtip-landing"
 publishOrigin = "default"
-base = "/home/connor/.openclaw/workspace/clawtip-landing"
 
 [build.environment]
 

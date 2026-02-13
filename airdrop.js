@@ -8,6 +8,11 @@ const AGENT_FIELDS = document.getElementById('agent-fields');
 const SPAM_COOKIE_NAME = 'airdrop_submitted';
 const SPAM_COOKIE_DURATION = 24 * 60 * 60 * 1000; // 24 hours
 
+// Status Check Elements
+const STATUS_WALLET = document.getElementById('status-wallet');
+const CHECK_STATUS_BTN = document.getElementById('check-status-btn');
+const STATUS_RESULT = document.getElementById('status-result');
+
 // Initialize form
 if (AIRDROP_FORM) {
     ENTITY_TYPE_SELECT.addEventListener('change', toggleAgentFields);
@@ -15,6 +20,48 @@ if (AIRDROP_FORM) {
     
     // Check for existing submission
     checkExistingSubmission();
+}
+
+// Initialize Status Check
+if (CHECK_STATUS_BTN) {
+    CHECK_STATUS_BTN.addEventListener('click', handleStatusCheck);
+}
+
+/**
+ * Handle Status Check
+ */
+async function handleStatusCheck() {
+    const wallet = STATUS_WALLET.value.trim();
+    if (!wallet) return;
+
+    CHECK_STATUS_BTN.disabled = true;
+    STATUS_RESULT.style.display = 'none';
+
+    try {
+        const response = await fetch(`https://clawtip-verify.kay-594.workers.dev/api/status?wallet=${wallet}`);
+        const result = await response.json();
+
+        STATUS_RESULT.style.display = 'block';
+        if (result.found) {
+            STATUS_RESULT.style.background = 'rgba(39, 201, 63, 0.1)';
+            STATUS_RESULT.style.border = '1px solid #27c93f';
+            STATUS_RESULT.innerHTML = `
+                <p style="color: #27c93f; font-weight: bold;">✅ Registration Found!</p>
+                <p>Status: ${result.verified ? 'Verified' : 'Pending Verification'}</p>
+                <p>Allocation: ${result.allocation} CLAW</p>
+                <p>Type: ${result.type}</p>
+            `;
+        } else {
+            STATUS_RESULT.style.background = 'rgba(255, 77, 77, 0.1)';
+            STATUS_RESULT.style.border = '1px solid #ff4d4d';
+            STATUS_RESULT.innerHTML = '<p style="color: #ff4d4d;">❌ No registration found for this wallet.</p>';
+        }
+    } catch (e) {
+        STATUS_RESULT.style.display = 'block';
+        STATUS_RESULT.innerHTML = 'Error checking status. Please try again.';
+    } finally {
+        CHECK_STATUS_BTN.disabled = false;
+    }
 }
 
 /**
@@ -207,8 +254,15 @@ async function handleFormSubmit(e) {
             setSpamCookie();
 
             // Show success message
+            const tweetText = encodeURIComponent("I just joined the @clawtipbot agent economy! 🦞\n\nClaim your airdrop at clawtip.me and help build the future of autonomous agent tipping. #CLAW #Solana #AI");
+            const tweetUrl = `https://twitter.com/intent/tweet?text=${tweetText}`;
+
             showMessage(
-                '✅ Submission received! Your wallet has been added to the airdrop list. CLAW tokens will be distributed to all verified addresses in weekly batches. No further action needed - just watch your wallet!',
+                `<div>
+                    <p style="margin-bottom: 1rem;">✅ Submission received! Your wallet has been added to the airdrop list.</p>
+                    <p style="font-size: 0.9rem; color: var(--secondary); margin-bottom: 1.5rem;">🚀 Want a 50% Bonus? Share your submission on X!</p>
+                    <a href="${tweetUrl}" target="_blank" class="btn btn-primary" style="background: #1DA1F2; padding: 0.5rem 1rem; font-size: 0.8rem; box-shadow: none;">Tweet to Verify & Get Bonus</a>
+                </div>`,
                 'success'
             );
 

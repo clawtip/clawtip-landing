@@ -187,6 +187,7 @@ async function handleFormSubmit(e) {
         // Prepare form data
         const formData = new FormData(AIRDROP_FORM);
         const data = Object.fromEntries(formData);
+        console.log('Submitting airdrop data:', data);
 
         // Submit to backend (Cloudflare Worker)
         const response = await fetch('https://clawtip-airdrop.kay-594.workers.dev/api/airdrop', {
@@ -197,7 +198,9 @@ async function handleFormSubmit(e) {
             body: JSON.stringify(data)
         });
 
+        console.log('Worker response status:', response.status);
         const result = await response.json();
+        console.log('Worker result:', result);
 
         if (response.ok) {
             // Set spam cookie

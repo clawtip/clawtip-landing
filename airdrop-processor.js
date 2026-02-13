@@ -13,7 +13,7 @@ const path = require('path');
 const crypto = require('crypto');
 const http = require('http');
 
-const REGISTRY_PATH = path.join(__dirname, 'airdrop-registry.json');
+const REGISTRY_PATH = '/tmp/airdrop-registry.json';
 const VERIFICATION_TOKEN_LENGTH = 32;
 const VERIFICATION_EXPIRY = 24 * 60 * 60 * 1000; // 24 hours
 
